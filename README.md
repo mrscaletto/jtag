@@ -6,6 +6,7 @@ JTAG - is an industry standard for verifying designs and testing printed circuit
 Main blocks: jtagtap.sv and ram_module
 
 Module jtag 
+
 Inputs: input TCK, input TDI, input TMS, input HREADY, input HRESP, input [31:0] HRDATA;              
 Outputs: output reg HWRITE, output reg [1:0] HTRANS, output reg [31:0] HWDATA, output reg [31:0] HADDR, output reg TDO;
   	
