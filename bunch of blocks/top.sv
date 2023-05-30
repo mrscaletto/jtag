@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 
 module top(
-    );
+    
 	
 	// JTAG-related IO
-	logic TCK; // Test Clock Input 
-	logic TDI; // Test Data Input 
-	logic  TDO; // Test Data Output 
-	logic TMS; // Test Mode Select 
+	logic TCK, // Test Clock Input 
+	logic TDI, // Test Data Input 
+	logic  TDO, // Test Data Output 
+	logic TMS, // Test Mode Select 
   	
   	// AHB-related IO
-  	logic HREADY;
+  	logic HREADY,
   	
-logic [31:0] HRDATA;
+logic [31:0] HRDATA,
   	logic  HWRITE,
-  	logic  [31:0] HWDATA;
-  	logic  [31:0] HADDR;    
-    
+  	logic  [31:0] HWDATA,
+  	logic  [31:0] HADDR    
+    );
     
 jtag d0(
 .TCK(CLK),
@@ -28,7 +28,7 @@ jtag d0(
 .HWRITE(HWRITE),
 .HWDATA(HWDATA),
 .HADDR(HADDR)
-)    
+);    
 
 single_port_ram d1(
 .HREADY(HREADY),
@@ -36,11 +36,10 @@ single_port_ram d1(
 .HWRITE(HWRITE),
 .HWDATA(HWDATA),
 .HADDR(HADDR)  
- )   
+ );   
     
     
     
     
     
 endmodule
-
