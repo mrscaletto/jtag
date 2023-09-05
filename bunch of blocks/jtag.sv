@@ -44,8 +44,8 @@ parameter TEST_LOGIC_RESET = 4'h0,
   EXIT_2_IR = 4'h2, 
   UPDATE_IR = 4'h1;
 //Input MUX
-  parameter BYPASS = 4'b0000;  // 
-  parameter IDCODE = 4'b1000;  // 
+  parameter BYPASS = 4'b0000;   
+  parameter IDCODE = 4'b1000;  
   parameter ADDR =   4'b0100;
   parameter WDATA =  4'b1100;
   parameter RDATA =  4'b0010;
