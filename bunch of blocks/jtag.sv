@@ -19,11 +19,14 @@ module jtag (
   	output reg [31:0] HWDATA,
   	output reg [31:0] HADDR
 );
-//=============Internal Constants======================
+
 parameter REGISTER_SIZE = 32;
 parameter IR_SIZE = 4;
 parameter STATE_SIZE = 4;
-//=============States==================================
+
+
+
+	
 parameter TEST_LOGIC_RESET = 4'h0, 
   RUN_TEST_IDLE = 4'hf, 
   SELECT_DR_SCAN = 4'he, 
@@ -40,18 +43,18 @@ parameter TEST_LOGIC_RESET = 4'h0,
   PAUSE_IR = 4'h3, 
   EXIT_2_IR = 4'h2, 
   UPDATE_IR = 4'h1;
-//=============Input MUX===============================
+//Input MUX
   parameter BYPASS = 4'b0000;  // 
   parameter IDCODE = 4'b1000;  // 
   parameter ADDR =   4'b0100;
   parameter WDATA =  4'b1100;
   parameter RDATA =  4'b0010;
-//=============Internal Variables======================
+//Internal Variables
   reg [IR_SIZE-1:0] IR;
   reg [IR_SIZE-1:0] LATCH_IR;
   reg [STATE_SIZE-1:0] state;
   reg [STATE_SIZE-1:0] next_state;
-//==========Code startes Here==========================
+//Code startes Here
 always @ (posedge TCK)
 begin : JTAG
  case(state)
@@ -154,6 +157,7 @@ end
 
 assign instruction_tdo = IR[0];
  
+
 // Updating IR (Instruction Register)
 always @ (negedge TCK)
 begin
@@ -169,21 +173,19 @@ wire  bypassed_tdo;
 reg   bypass_reg;
  
 always @ (posedge TCK)
-begin
-  if (state == TEST_LOGIC_RESET)
-    bypass_reg <= 1'b0;
-  else if (LATCH_IR == BYPASS && state == CAPTURE_DR)
-    bypass_reg<= 1'b0;
-  else if(LATCH_IR == BYPASS && state == SHIFT_DR)
-    bypass_reg<= TDI;
-end
+	begin
+  		if (state == TEST_LOGIC_RESET)
+   		 bypass_reg <= 1'b0;
+  	else if (LATCH_IR == BYPASS && state == CAPTURE_DR)
+   		 bypass_reg<= 1'b0;
+  	else if(LATCH_IR == BYPASS && state == SHIFT_DR)
+    		bypass_reg<= TDI;
+	end
  
 assign bypassed_tdo = bypass_reg;
 
 
-
-// ID Code register
-  reg [REGISTER_SIZE-1:0] DR_IDCODE;
+reg [REGISTER_SIZE-1:0] DR_IDCODE;
 wire        idcode_tdo;
  
 always @ (posedge TCK)
@@ -252,7 +254,6 @@ end
 assign wdata_tdo = DR_WDATA[0];
   
   
-// Set TDO
 always @ (negedge TCK)
   begin
     case(LATCH_IR)
