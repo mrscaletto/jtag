@@ -3,6 +3,8 @@ module test_RegisterFile();
   reg CLK, RST;
   always #1 CLK = ~CLK;
   
+  
+  
   reg W_EN;
   reg [0:63] W_DATA;
   reg [0:4] W_ADDR, R_ADDR1, R_ADDR2;
@@ -19,13 +21,16 @@ module test_RegisterFile();
                         .r_addr1(R_ADDR1),
                         //.r_addr2(R_ADDR2),
                         .r_data1(R_DATA1),
-                        //.r_data2(R_DATA2));
+                        //.r_data2(R_DATA2)
+                     );
     
   initial begin
     check_REGISTER;
   end
   
-  /*
+ 
+    
+    /*
     initial begin
     $dumpfile("dump.vcd");
     $dumpvars(0);
@@ -33,6 +38,7 @@ module test_RegisterFile();
   */
 
 
+    
   	task check_REGISTER(); begin
         RST = 1'b1;
         CLK = 1'b0;
@@ -43,9 +49,9 @@ module test_RegisterFile();
         W_DATA = 64'h0;
       	W_MASK = 8'hFF;
         
-
-        #32
-
+    /cycle
+        #16
+        #16
 
         #4 RST = 1'b0;
         
@@ -62,6 +68,7 @@ module test_RegisterFile();
 
 
       j=8;
+        
       for (i = 0; i < 8; i=i+1) begin
         j=j-1;
         #2 R_ADDR1 = i; R_ADDR2 = j;
@@ -71,6 +78,8 @@ module test_RegisterFile();
         #2 R_ADDR1 = 5; R_ADDR2 = 5;      
         #20 $stop;
         end
+   
     endtask
-  
+
+    
 endmodule
